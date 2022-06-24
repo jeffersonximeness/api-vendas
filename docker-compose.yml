@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    container_name: api-vendas-db
+    image: postgres:latest
+    restart: on-failure
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=$DATABASE_USER
+      - POSTGRES_PASSWORD=$DATABASE_PASSWORD
+      - POSTGRES_DB=$DATABASE_NAME
+    ports:
+      - $DATABASE_PORT:$DATABASE_PORT
+
+  cache:
+    container_name: api_cache
+    image: redis:alpine
+    restart: on-failure
+    volumes:
+      - ./cache:/data
+    ports:
+      - $REDIS_PORT:$REDIS_PORT
